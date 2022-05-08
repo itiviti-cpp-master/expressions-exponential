@@ -1,5 +1,6 @@
 [submodule "googletest"]
 	path = googletest
+	branch = main
 	url = https://github.com/google/googletest
 [submodule "test"]
 	path = test
