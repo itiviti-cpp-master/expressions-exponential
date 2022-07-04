@@ -18,6 +18,7 @@ include_directories(${COMMON_INCLUDES})
 
 # Source files
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
+list(REMOVE_ITEM SRC_FILES ${PROJECT_SOURCE_DIR}/src/main.cpp)
 
 # Compile source files into a library
 add_library(expressions_lib ${SRC_FILES})
