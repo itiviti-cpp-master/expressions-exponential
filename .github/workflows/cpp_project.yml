@@ -17,9 +17,12 @@ jobs:
         sudo apt-get install -y clang-tidy-10
         sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-10 100
     - name: Checkout submodules
-      uses: actions/checkout@v1
+      uses: actions/checkout@v3
       with:
         submodules: recursive
+    - name: Update tests
+      run: |
+        git submodule update --remote --recursive test
     - name: Check for bad words
       run: "! grep -R -n -w -f .bad_words src include"
     - name: Run clang format
@@ -29,8 +32,8 @@ jobs:
         exclude: './googletest ./test'
         extensions: 'h,cpp'
         clangFormatVersion: 11
-    - name: Setup ICA
-      uses: actions/checkout@v2
+    - name: Checkout ICA submodule
+      uses: actions/checkout@v3
       with:
         repository: 'Kurkin/ica-lint-action'
         path: ica
@@ -55,7 +58,7 @@ jobs:
       run: make
       working-directory: ./build_asan
     - name: Run ASAN tests
-      timeout-minutes: 8
+      timeout-minutes: 5
       run: ./test/runUnitTests
       working-directory: ./build_asan
     - name: Prepare USAN build dir
